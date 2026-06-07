@@ -16,6 +16,14 @@ const Usuario = mongoose.model('Usuario', {
   password: String
 });
 
+const Leccion = mongoose.model('Leccion', {
+  idioma: String,
+  categoria: String,
+  leccion_num: Number,
+  titulo: String,
+  ejercicios: Array
+}, 'Lecciones');
+
 app.post('/register', async (req, res) => {
   try {
     const { username, email, password } = req.body;
@@ -27,22 +35,14 @@ app.post('/register', async (req, res) => {
   }
 });
 
-const PORT = process.env.PORT || 3000;
-const Leccion = mongoose.model('Leccion', {
-  idioma: String,
-  categoria: String,
-  leccion_num: Number,
-  titulo: String,
-  ejercicios: Array
-});
-
 app.get('/lecciones', async (req, res) => {
   try {
-const Leccion = mongoose.model('Leccion', {
-  idioma: String,
-  categoria: String,
-  leccion_num: Number,
-  titulo: String,
-  ejercicios: Array
-}, 'Lecciones');
+    const lecciones = await Leccion.find({});
+    res.json(lecciones);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
+
+const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => console.log('Servidor corriendo en puerto ' + PORT));
