@@ -28,4 +28,20 @@ app.post('/register', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
+const Leccion = mongoose.model('Leccion', {
+  idioma: String,
+  categoria: String,
+  leccion_num: Number,
+  titulo: String,
+  ejercicios: Array
+});
+
+app.get('/lecciones', async (req, res) => {
+  try {
+    const lecciones = await Leccion.find({});
+    res.json(lecciones);
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+});
 app.listen(PORT, () => console.log('Servidor corriendo en puerto ' + PORT));
