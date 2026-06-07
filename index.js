@@ -38,10 +38,11 @@ const Leccion = mongoose.model('Leccion', {
 
 app.get('/lecciones', async (req, res) => {
   try {
-    const lecciones = await Leccion.find({});
-    res.json(lecciones);
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+const Leccion = mongoose.model('Leccion', {
+  idioma: String,
+  categoria: String,
+  leccion_num: Number,
+  titulo: String,
+  ejercicios: Array
+}, 'Lecciones');
 app.listen(PORT, () => console.log('Servidor corriendo en puerto ' + PORT));
